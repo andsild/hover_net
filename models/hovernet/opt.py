@@ -52,7 +52,7 @@ def get_config(nr_type, mode):
                         },
                         # path to load, -1 to auto load checkpoint from previous phase,
                         # None to start from scratch
-                        "pretrained": "../pretrained/ImageNet-ResNet50-Preact_pytorch.tar",
+                        "pretrained": "pretrained/ImageNet-ResNet50-Preact_pytorch.tar",
                         # 'pretrained': None,
                     },
                 },
@@ -101,10 +101,11 @@ def get_config(nr_type, mode):
         "run_engine": {
             "train": {
                 # TODO: align here, file path or what? what about CV?
-                "dataset": "",  # whats about compound dataset ?
+                "dataset": "consep",  # whats about compound dataset ?
                 "nr_procs": 16,  # number of threads for dataloader
                 "run_step": train_step,  # TODO: function name or function variable ?
                 "reset_per_run": False,
+                "batch_size": {"train": 4, "valid": 8,}, # batch size per gpu
                 # callbacks are run according to the list order of the event
                 "callbacks": {
                     Events.STEP_COMPLETED: [
@@ -125,6 +126,7 @@ def get_config(nr_type, mode):
                 "dataset": "",  # whats about compound dataset ?
                 "nr_procs": 8,  # number of threads for dataloader
                 "run_step": valid_step,
+                "batch_size": {"train": 4, "valid": 8,}, # batch size per gpu
                 "reset_per_run": True,  # * to stop aggregating output etc. from last run
                 # callbacks are run according to the list order of the event
                 "callbacks": {
